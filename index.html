@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quran Explorer - Read, Listen, Learn</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Explore the Quran with Arabic text, translations in 90+ languages, and audio recitations. Read, listen, search, and bookmark verses in a beautiful, responsive interface.">
+    <meta name="keywords" content="quran, quran explorer, holy quran, quran online, quran reading, quran translations, quran audio, islamic, islam">
+    <meta name="author" content="Quran Explorer">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yourusername.github.io/quran-explorer/">
+    <meta property="og:title" content="Quran Explorer - Read, Listen, Learn">
+    <meta property="og:description" content="Explore the Quran with Arabic text, translations in 90+ languages, and audio recitations.">
+    <meta property="og:image" content="https://yourusername.github.io/quran-explorer/img/quran-explorer-preview.jpg">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://yourusername.github.io/quran-explorer/">
+    <meta property="twitter:title" content="Quran Explorer - Read, Listen, Learn">
+    <meta property="twitter:description" content="Explore the Quran with Arabic text, translations in 90+ languages, and audio recitations.">
+    <meta property="twitter:image" content="https://yourusername.github.io/quran-explorer/img/quran-explorer-preview.jpg">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://yourusername.github.io/quran-explorer/">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="img/favicon.png">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/styles.css">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Preconnect to API domains -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://cdn.islamic.network">
+    
+    <!-- PWA Support -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#1D4B44">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Quran Explorer">
+    <link rel="apple-touch-icon" href="img/favicon.png">
+    
+    <!-- Service Worker Registration -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('./sw.js')
+            .then(registration => {
+              console.log('Service Worker registered successfully:', registration.scope);
+            })
+            .catch(error => {
+              console.log('Service Worker registration failed:', error);
+            });
+        });
+      }
+    </script>
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <img src="https://cdn.jsdelivr.net/gh/fawazahmed0/quran-api@1/fonts/QCF_BSML.ttf" alt="Quran Explorer Logo" class="logo">
+            <h1>Quran Explorer</h1>
+        </div>
+        <nav>
+            <ul class="main-nav">
+                <li><a href="#" class="active">Home</a></li>
+                <li><a href="#">Browse</a></li>
+                <li><a href="#">Search</a></li>
+                <li><a href="#">Bookmarks</a></li>
+                <li><a href="#">About</a></li>
+            </ul>
+        </nav>
+        <div class="header-controls">
+            <div class="theme-toggle">
+                <i class="fas fa-moon"></i>
+            </div>
+            <div class="language-selector">
+                <select id="language-select">
+                    <option value="en">English</option>
+                    <option value="ar">العربية</option>
+                    <option value="fr">Français</option>
+                    <option value="ur">اردو</option>
+                    <option value="id">Bahasa Indonesia</option>
+                </select>
+            </div>
+            <div class="search-container">
+                <input type="text" placeholder="Search the Quran..." id="search-input">
+                <button id="search-button"><i class="fas fa-search"></i></button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="sidebar">
+            <div class="sidebar-section">
+                <h3>Navigation</h3>
+                <div class="nav-tabs">
+                    <button class="tab-button active" data-tab="surah">Surah</button>
+                    <button class="tab-button" data-tab="juz">Juz</button>
+                    <button class="tab-button" data-tab="page">Page</button>
+                </div>
+                <div class="tab-content" id="surah-tab">
+                    <div class="surah-list">
+                        <div class="surah-item">
+                            <span class="surah-number">1</span>
+                            <div class="surah-name">
+                                <span class="arabic">الفاتحة</span>
+                                <span class="english">Al-Fatihah</span>
+                            </div>
+                            <span class="verse-count">7 verses</span>
+                        </div>
+                        <!-- More surah items will be populated by JavaScript -->
+                    </div>
+                </div>
+                <div class="tab-content hidden" id="juz-tab">
+                    <div class="juz-list">
+                        <!-- Juz items will be populated by JavaScript -->
+                    </div>
+                </div>
+                <div class="tab-content hidden" id="page-tab">
+                    <div class="page-list">
+                        <!-- Page items will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+            <div class="sidebar-section">
+                <h3>Settings</h3>
+                <div class="settings-group">
+                    <label for="arabic-font">Arabic Font:</label>
+                    <select id="arabic-font">
+                        <option value="Amiri">Amiri</option>
+                        <option value="Scheherazade">Scheherazade</option>
+                        <option value="Noto Naskh Arabic">Noto Naskh Arabic</option>
+                    </select>
+                </div>
+                <div class="settings-group">
+                    <label for="translation">Translation:</label>
+                    <select id="translation">
+                        <option value="en.asad">Muhammad Asad</option>
+                        <option value="en.pickthall">Marmaduke Pickthall</option>
+                        <option value="en.yusufali">Yusuf Ali</option>
+                        <option value="en.sahih">Sahih International</option>
+                    </select>
+                </div>
+                <div class="settings-group">
+                    <label for="font-size">Font Size:</label>
+                    <div class="font-size-controls">
+                        <button id="decrease-font"><i class="fas fa-minus"></i></button>
+                        <span id="font-size-value">Medium</span>
+                        <button id="increase-font"><i class="fas fa-plus"></i></button>
+                    </div>
+                </div>
+                <div class="settings-group">
+                    <label for="reciter">Reciter:</label>
+                    <select id="reciter">
+                        <option value="ar.alafasy">Mishary Alafasy</option>
+                        <option value="ar.abdulbasit">Abdul Basit</option>
+                        <option value="ar.minshawi">Mohamed Siddiq El-Minshawi</option>
+                        <option value="ar.husary">Mahmoud Khalil Al-Husary</option>
+                    </select>
+                </div>
+            </div>
+            <div class="sidebar-section">
+                <h3>Bookmarks</h3>
+                <div class="bookmarks-list">
+                    <p class="empty-message">No bookmarks yet.</p>
+                    <!-- Bookmarks will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="quran-reader">
+                <div class="reader-header">
+                    <div class="current-surah">
+                        <h2><span id="surah-name-arabic">الفاتحة</span> - <span id="surah-name-english">Al-Fatihah</span></h2>
+                        <p class="surah-info">The Opening • <span id="verse-count">7</span> Verses • <span id="revelation-type">Meccan</span></p>
+                    </div>
+                    <div class="reader-controls">
+                        <button id="previous-surah"><i class="fas fa-chevron-left"></i></button>
+                        <button id="play-surah"><i class="fas fa-play"></i></button>
+                        <button id="next-surah"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                </div>
+                <div class="bismillah">
+                    <p class="arabic-text">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+                </div>
+                <div class="verses-container">
+                    <!-- Verses will be populated by JavaScript -->
+                    <div class="verse-item">
+                        <div class="verse-header">
+                            <span class="verse-number">1</span>
+                            <div class="verse-actions">
+                                <button class="play-verse"><i class="fas fa-play"></i></button>
+                                <button class="bookmark-verse"><i class="far fa-bookmark"></i></button>
+                                <button class="share-verse"><i class="fas fa-share-alt"></i></button>
+                            </div>
+                        </div>
+                        <p class="arabic-text">الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ</p>
+                        <p class="translation-text">All praise is due to Allah, Lord of the worlds</p>
+                    </div>
+                </div>
+                <div class="audio-player">
+                    <div class="audio-controls">
+                        <button id="audio-prev"><i class="fas fa-step-backward"></i></button>
+                        <button id="audio-play"><i class="fas fa-play"></i></button>
+                        <button id="audio-next"><i class="fas fa-step-forward"></i></button>
+                    </div>
+                    <div class="audio-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill"></div>
+                        </div>
+                        <div class="time-display">
+                            <span id="current-time">0:00</span> / <span id="total-time">0:00</span>
+                        </div>
+                    </div>
+                    <div class="audio-settings">
+                        <button id="audio-repeat"><i class="fas fa-redo"></i></button>
+                        <div class="audio-speed">
+                            <select id="playback-speed">
+                                <option value="0.75">0.75x</option>
+                                <option value="1" selected>1x</option>
+                                <option value="1.25">1.25x</option>
+                                <option value="1.5">1.5x</option>
+                            </select>
+                        </div>
+                        <button id="audio-volume"><i class="fas fa-volume-up"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>About Quran Explorer</h4>
+                <p>A simple, elegant way to read, listen to, and understand the Quran.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="#">Tafsir Sources</a></li>
+                    <li><a href="#">Translation References</a></li>
+                    <li><a href="#">Audio Reciters</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Connect</h4>
+                <ul>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Feedback</a></li>
+                    <li><a href="#">Report an Issue</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>Powered by <a href="https://github.com/fawazahmed0/quran-api" target="_blank">fawazahmed0/quran-api</a> • Made with ❤️ for the Ummah</p>
+        </div>
+    </footer>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

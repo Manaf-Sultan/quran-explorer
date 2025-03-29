@@ -1,0 +1,85 @@
+// Create a simple favicon
+const faviconCanvas = document.createElement('canvas');
+faviconCanvas.width = 64;
+faviconCanvas.height = 64;
+const faviconCtx = faviconCanvas.getContext('2d');
+
+// Background
+faviconCtx.fillStyle = '#1D4B44';
+faviconCtx.fillRect(0, 0, 64, 64);
+
+// Border
+faviconCtx.strokeStyle = '#D4AF37';
+faviconCtx.lineWidth = 3;
+faviconCtx.strokeRect(5, 5, 54, 54);
+
+// Text
+faviconCtx.fillStyle = '#FFFFFF';
+faviconCtx.font = 'bold 30px Arial';
+faviconCtx.textAlign = 'center';
+faviconCtx.textBaseline = 'middle';
+faviconCtx.fillText('Q', 32, 32);
+
+// Export
+const faviconDataUrl = faviconCanvas.toDataURL('image/png');
+const faviconImg = document.createElement('img');
+faviconImg.src = faviconDataUrl;
+faviconImg.style.display = 'block';
+faviconImg.style.margin = '20px';
+document.body.appendChild(faviconImg);
+
+// Create a preview image
+const previewCanvas = document.createElement('canvas');
+previewCanvas.width = 1200;
+previewCanvas.height = 630;
+const previewCtx = previewCanvas.getContext('2d');
+
+// Background
+previewCtx.fillStyle = '#1D4B44';
+previewCtx.fillRect(0, 0, 1200, 630);
+
+// Decorative border
+previewCtx.strokeStyle = '#D4AF37';
+previewCtx.lineWidth = 20;
+previewCtx.strokeRect(40, 40, 1120, 550);
+
+// Text
+previewCtx.fillStyle = '#FFFFFF';
+previewCtx.font = 'bold 120px Arial';
+previewCtx.textAlign = 'center';
+previewCtx.textBaseline = 'middle';
+previewCtx.fillText('Quran Explorer', 600, 200);
+
+previewCtx.fillStyle = '#D4AF37';
+previewCtx.font = 'bold 60px Arial';
+previewCtx.fillText('Read • Listen • Learn', 600, 300);
+
+previewCtx.fillStyle = '#FFFFFF';
+previewCtx.font = '40px Arial';
+previewCtx.fillText('90+ Languages • 440+ Translations • Audio Recitations', 600, 400);
+
+// Export
+const previewDataUrl = previewCanvas.toDataURL('image/png');
+const previewImg = document.createElement('img');
+previewImg.src = previewDataUrl;
+previewImg.style.display = 'block';
+previewImg.style.margin = '20px';
+previewImg.style.width = '600px';
+document.body.appendChild(previewImg);
+
+// Instructions
+const instructions = document.createElement('div');
+instructions.innerHTML = `
+<h1>Image Generation Tool</h1>
+<p>Right-click on each image and select "Save Image As..." to save them:</p>
+<ul>
+  <li>Save the small square image as "favicon.png" in the img folder</li>
+  <li>Save the large rectangular image as "quran-explorer-preview.jpg" in the img folder</li>
+</ul>
+`;
+document.body.insertBefore(instructions, document.body.firstChild);
+
+// Style the page
+document.body.style.fontFamily = 'Arial, sans-serif';
+document.body.style.padding = '20px';
+document.body.style.backgroundColor = '#f5f5f5';
